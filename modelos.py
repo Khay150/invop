@@ -7,7 +7,7 @@ problem.objective.set_sense(problem.objective.sense.maximize)
 # Variables
 problem.variables.add(names=["x1", "x2", "x3"], lb=[0, 0, 0])
 
-# Función objetivo: 5.900 x1 + 2900 x2 + 1200 x3 - 11500000
+# Función objetivo: 5.900 x1 + 2900 x2 + 1200 x3 - 13500000
 problem.objective.set_linear([("x1", 5900), ("x2", 2900), ("x3", 1200)])
 problem.objective.set_offset(-13500000)
 
