@@ -488,28 +488,13 @@ apropiadas. Para esto, analizar los siguientes ítems, \textbf{evitando reoptimi
 
     \end{itemize}
 
-
-    Gastos Fijos:
-
-    \begin{itemize}
-
-        \item Refinado: \$5.000.000.
-        \item Fraccionado: \$5.000.000
-        \item Embalaje Combustible Vehículos: \$1.000.000.
-        \item Embalaje Kerosene: \$500.000.
-        \item Total: \$11.500.000. \\
-
-    \end{itemize}
-
-
     Función objetivo: 
 
     \begin{center}
         
-        Maximizar 2.900 x2 + 1.200 x3 - 11.500.000
+        Maximizar 2.900 x2 + 1.200 x3
 
     \end{center}
-
 
     Restricciones: 
 
@@ -523,15 +508,13 @@ apropiadas. Para esto, analizar los siguientes ítems, \textbf{evitando reoptimi
 
     \end{itemize}
 
-    \vspace{0.5em}
-
     Solucion del Modelo: 
 
     \begin{itemize}
 
         \item x2 = 3.000
         \item x3 = 7.000
-        \item Z = 5.600.000\\
+        \item Z = 17.100.000\\
 
     \end{itemize}
 
@@ -546,6 +529,22 @@ apropiadas. Para esto, analizar los siguientes ítems, \textbf{evitando reoptimi
         \item Condiciones de no negatividad: 3.000  $\geq$ 0, 7.000 $\geq$ 0\\
 
     \end{itemize}
+
+    Ahora que verificamos que es una solucion factible, tenemos que restarle los gastos fijos a z para determinar la ganancia total de la compañía
+
+    Gastos Fijos:
+
+    \begin{itemize}
+
+        \item Refinado: \$5.000.000.
+        \item Fraccionado: \$5.000.000
+        \item Embalaje Combustible Vehículos: \$1.000.000.
+        \item Embalaje Kerosene: \$500.000.
+        \item Total: \$11.500.000.
+
+    \end{itemize}
+
+    Luego, la ganancia total de la compañía es: 17.100.000 - 11.500.000 = 5.600.000. \\
 
     \textbf{Conclusión }:
 
@@ -611,25 +610,11 @@ apropiadas. Para esto, analizar los siguientes ítems, \textbf{evitando reoptimi
     \end{itemize}
 
 
-    Gastos Fijos:
-
-    \begin{itemize}
-
-        \item Refinado: \$5.000.000.
-        \item Fraccionado: \$5.000.000
-        \item Embalaje Combustible Aviones: \$2.000.000.
-        \item Embalaje Combustible Vehículos: \$1.000.000.
-        \item Embalaje K: \$500.000.
-        \item Total: \$13.500.000. \\
-
-    \end{itemize}
-
-
     Función objetivo: 
 
     \begin{center}
         
-        Maximizar 5.900 x1 + 2.900 x2 + 1.200 x3 - 13.500.000
+        Maximizar 5.900 x1 + 2.900 x2 + 1.200 x3
 
     \end{center}
 
@@ -656,7 +641,7 @@ apropiadas. Para esto, analizar los siguientes ítems, \textbf{evitando reoptimi
         \item x1 = 1.000
         \item x2 = 3.000
         \item x3 = 4.333,333333333333
-        \item Z = 6.300.000\\
+        \item Z = 19.800.000\\
 
     \end{itemize}
 
@@ -672,6 +657,23 @@ apropiadas. Para esto, analizar los siguientes ítems, \textbf{evitando reoptimi
         \item Condiciones de no negatividad: 1.000 $\geq$ 0, 3.000 $\geq$ 0, 4.333,333333333333 $\geq$ 0 \\
 
     \end{itemize}
+
+    Calculamos los gastos fijos:\\
+
+    Gastos Fijos:
+
+    \begin{itemize}
+
+        \item Refinado: \$5.000.000.
+        \item Fraccionado: \$5.000.000
+        \item Embalaje Combustible Aviones: \$2.000.000.
+        \item Embalaje Combustible Vehículos: \$1.000.000.
+        \item Embalaje K: \$500.000.
+        \item Total: \$13.500.000. \\
+
+    \end{itemize}
+
+    Luego, la ganancia total de la compañía es: 19.800.000 - 13.500.000 = 6.300.000. \\
 
     \textbf{Conclusión }:
 
@@ -720,7 +722,6 @@ apropiadas. Para esto, analizar los siguientes ítems, \textbf{evitando reoptimi
         \item Total: 15.300.000
 
     \end{itemize}
-    \clearpage
 
     - \underline{Kerosene} (4.333,333333333333 unidades):
 
@@ -801,7 +802,7 @@ apropiadas. Para esto, analizar los siguientes ítems, \textbf{evitando reoptimi
         }
     \end{center}
 
-    \vspace{0.5em}
+    \clearpage
 
     \begin{enumerate}[label=\alph*)]
 
@@ -894,6 +895,85 @@ apropiadas. Para esto, analizar los siguientes ítems, \textbf{evitando reoptimi
     \item Otra propuesta del gerente es contratar 1000 horas extras al mes del personal del sector de refinado. Indicar
     al director si es conveniente aceptar esta nueva propuesta y hasta cuánto debería pagar por cada hora extra
     de este sector
+
+    Para poder asesorar al director sobre esta propuesta, primero debemos plantear el problema dual del modelo anterior para poder determinar
+    hasta cuánto debería pagar por cada hora extra.\\
+
+    Si nosotros tenemos el modelo:\\
+
+    Función objetivo: 
+
+    \begin{center}
+        
+        Maximizar 5.900 x1 + 2.900 x2 + 1.200 x3
+
+    \end{center}
+
+    \clearpage
+
+    Restricciones: 
+
+    \begin{itemize}
+
+        \item Refinado (máximo 38.000 h): 10 x1 + 5 x2 + 3 x3 $\leq$ 38.000
+        \item Fraccionado (máximo 80.000 h): 20 x1 + 10 x2 + 6 x3 $\leq$ 80.000
+        \item Embalaje Combustible Aviones (máximo 4.000 h): 4 x1 $\leq$ 4.000 $\rightarrow$ x1 $\leq$ 1.000.
+        \item Embalaje Combustible Vehículos (máximo 6.000 h): 2 x2 $\leq$ 6.000 $\rightarrow$ x2 $\leq$ 3.000.
+        \item Embalaje K (máximo 7.000 h): x3 $\leq$ 7.000
+        \item Condiciones de no negatividad: x1 $\geq$ 0, x2 $\geq$ 0, x3 $\geq$ 0\\
+
+    \end{itemize}
+
+    \vspace{0.5em}
+
+    Entonces el dual queda de la siguiente manera: \\
+
+    Función objetivo: 
+
+    \begin{center}
+        
+        Maximizar 38.000 y1 + 80.000 y2 + 1.000 y3 + 3.000 y4 + 7.000 y5
+
+    \end{center}
+
+    Restricciones: 
+
+    \begin{itemize}
+
+        \item 10 y1 + 20 y2 + y3 $\geq$ 5.900
+        \item 5 y1 + 10 y2 + y4 $\geq$ 2.900
+        \item 3 y1 + 6 y2 + y5 $\geq$ 1.200
+        \item Condiciones de no negatividad: y1 $\geq$ 0, y2 $\geq$ 0, y3 $\geq$ 0, y4 $\geq$ 0, y5 $\geq$ 0\\
+
+    \end{itemize}
+
+    Solucion del Modelo: 
+
+    \begin{itemize}
+
+        \item y1 = 400
+        \item y2 = 0
+        \item y3 = 1.900
+        \item y4 = 900
+        \item y5 = 0
+        \item Z = 19.800.000\\
+
+    \end{itemize}
+
+    Verificamos si cumple las restricciones:
+
+    \begin{itemize}
+
+        \item 10 x 400 + 20 x 0 + 1 x 1.900 = 5.900 $\geq$ 5.900
+        \item 5 x 400 + 10 x 0 + 1 x 900 = 2.900 $\geq$ 2.900
+        \item 3 x 400 + 6 x 0 + 1 x 0 = 1.200 $\geq$ 1.200
+        \item Condiciones de no negatividad: 400 $\geq$ 0, 0 $\geq$ 0, 1.900 $\geq$ 0, 900 $\geq$ 0, 0 $\geq$ 0\\
+
+    \end{itemize}
+
+    Entonces es solución factible dual.\\
+
+    Luego, observando que y1 = 400, eso quiere decir que la propuesta va a ser rentable siempre que se pague, hasta como mucho, \$400 por cada hora extra del sector.
 
     \item Si el director decide pagar por hora extra la mitad del valor máximo indicado en el punto anterior, ¿en cuánto
     aumentaráa la ganacia mensual de la compañía?
