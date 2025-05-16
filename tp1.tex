@@ -896,8 +896,8 @@ apropiadas. Para esto, analizar los siguientes ítems, \textbf{evitando reoptimi
     al director si es conveniente aceptar esta nueva propuesta y hasta cuánto debería pagar por cada hora extra
     de este sector
 
-    Para poder asesorar al director sobre esta propuesta, primero debemos plantear el problema dual del modelo anterior para poder determinar
-    hasta cuánto debería pagar por cada hora extra.\\
+    Para poder asesorar al director sobre esta propuesta, haciendo un análisis de sensibilidad, primero debemos plantear el problema 
+    dual del modelo anteriorr.\\
 
     Si nosotros tenemos el modelo:\\
 
@@ -921,6 +921,17 @@ apropiadas. Para esto, analizar los siguientes ítems, \textbf{evitando reoptimi
         \item Embalaje Combustible Vehículos (máximo 6.000 h): 2 $x_{2}$ $\leq$ 6.000 $\rightarrow$ $x_{2}$ $\leq$ 3.000.
         \item Embalaje K (máximo 7.000 h): $x_{3}$ $\leq$ 7.000
         \item Condiciones de no negatividad: $x_{1}$ $\geq$ 0, $x_{2}$ $\geq$ 0, $x_{3}$ $\geq$ 0\\
+
+    \end{itemize}
+
+    \underline{Solucion del Modelo}: 
+
+    \begin{itemize}
+
+        \item $x_{1}$ = 1.000
+        \item $x_{2}$ = 3.000
+        \item $x_{3}$ = 4.333,333333333333
+        \item $Z$ = \$19.800.000\\
 
     \end{itemize}
 
@@ -973,10 +984,128 @@ apropiadas. Para esto, analizar los siguientes ítems, \textbf{evitando reoptimi
 
     Entonces es solución factible dual.\\
 
-    Luego, observando que $y_{1}$ = 400, eso quiere decir que la propuesta va a ser rentable siempre que se pague, hasta como mucho, \$400 por cada hora extra del sector. \\
-
     \clearpage
 
+    Ahora, para hallar la base del diccionario óptimo del problema sabesmo que:
+
+    \begin{itemize}
+
+        \item Si una \textbf{variable primal} $x_{j}$ $>$ 0 $\rightarrow$ \textbf{esta} en la base.
+        \item Si una \textbf{variable primal} $x_{j}$ $=$ 0 $\rightarrow$ \textbf{no esta} en la base.
+        \item Si una \textbf{variable dual} $y_{i}$ $>$ 0 $\rightarrow$  entonces la \textbf{restricción primal} 
+        i está \textbf{activa}, por lo que la \textbf{variable de holgura asociada} está \textbf{fuera de la base}.
+        \item Si una \textbf{variable dual} $y_{i}$ $=$ 0 $\rightarrow$  la restricción primal \textbf{no está activa}, por lo tanto su \textbf{variable de 
+        holgura  esta} en la base. \\
+
+    \end{itemize}
+
+    Por lo que las variables quedan de la sigueinte forma:
+
+    \begin{itemize}
+
+        \item Variables Basicas:
+        \begin{itemize}
+
+            \item $x_{1}$
+            \item $x_{2}$
+            \item $x_{3}$
+            \item $x_{5}$
+            \item $x_{8}$\\
+    
+        \end{itemize}
+        \item Variables No Basicas:
+        \begin{itemize}
+
+            \item $x_{4}$
+            \item $x_{6}$
+            \item $x_{7}$
+    
+        \end{itemize}
+
+    \end{itemize}
+
+    Entonces tenemos los sigueintes datos:\\
+
+    \begin{center}
+    $X_{B} = \{x_{1}, x_{2}, x_{3}, x_{5}, x_{8}\}$ \hspace{1em} $X_{N} = \{x_{4}, x_{6}, x_{7}\}$ 
+    \hspace{1em} $C_{B}$ = \{5.900, 2.900, 1.200, 0, 0\} \hspace{1em} $C_{N} = \{0, 0, 0\}$\\
+    \end{center}
+
+    \[
+    B = \begin{bmatrix}
+    10 & 5  & 3 & 0 & 0 \\
+    20 & 10 & 6 & 1 & 0 \\
+    1  & 0  & 0 & 0 & 0 \\
+    0  & 1  & 0 & 0 & 0 \\
+    0  & 0  & 1 & 0 & 1 \\
+    \end{bmatrix}
+    \hspace{2em}
+    B^{-1} = \begin{bmatrix}
+        0           & 0 &    1	        &   0            &	0 \\
+        0           & 0 &    0	        &   1            &	0 \\
+      \frac{1}{3}   & 0 & -\frac{10}{3} & -\frac{5}{3}   &	0 \\
+       -2           & 1 &    0	        &   0            &	0 \\
+       -\frac{1}{3} & 0 & \frac{10}{3}	& \frac{5}{3}    &	1 \\
+    \end{bmatrix}
+    \]
+    \vspace{1em}
+    \[
+        A = \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & 0 & 0 \\
+        0 & 1 & 0 \\
+        0 & 0 & 1 \\
+        0 & 0 & 0 \\
+        \end{bmatrix}
+        \hspace{2em}
+        b = \begin{bmatrix}
+            $38.000$ \\
+            $80.000$ \\
+            $1.000$  \\
+            $3.000$  \\
+            $7.000$  \\
+        \end{bmatrix}
+    \]
+
+    \vspace{1em}
+
+    Luego, como se agregan 1.000 horas de extras de refinado, b1 = 39.000. \\
+    Ahora hacemos:
+
+    \[
+        B^{-1} \times \begin{bmatrix}
+            $39.000$ \\
+            $80.000$ \\
+            $1.000$  \\
+            $3.000$  \\
+            $7.000$  \\
+        \end{bmatrix} = 
+        \begin{bmatrix}
+            $1.000$ \\
+            $3.000$ \\
+            $$\frac{14.000}{3}$$  \\
+            $2.000$  \\
+            $$\frac{7.000}{3}$$  \\
+        \end{bmatrix}
+    \]
+
+    Da todo positivo, lo que da a entender que la base sigue siendo optima, sin embargo, al correr el modelo en simplex cambindo la variable relacionada al refinado,
+    la nueva solucion es:
+
+    \begin{itemize}
+
+        \item $x_{1}$ = 1.000
+        \item $x_{2}$ = 3.000
+        \item $x_{3}$ = 4.666,666666666667
+        \item $Z$ = \$20.200.000\\
+
+    \end{itemize}
+
+    Lo que demuestra que si conviene aceptar esta propuesta.
+
+    Luego, observando que $y_{1}$ = 400, eso quiere decir que la propuesta va a ser rentable siempre que se pague, hasta como mucho, \$400 por cada hora extra del sector. \\
+
+    
     \item Si el director decide pagar por hora extra la mitad del valor máximo indicado en el punto anterior, ¿en cuánto
     aumentaráa la ganacia mensual de la compañía? \\
 
