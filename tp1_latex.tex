@@ -1416,7 +1416,9 @@ donde:
         \begin{itemize}
 
             \item Precio de Venta: $X$.
-            \item Costos variables: \$4.000 (materia prima) + \$4.100 (refinado) + \$1.000 (fraccionado) + \$400 (embalaje) = \$9.500 \\
+            \item Costos variables: \$4.000 (materia prima) + \$4.100 (refinado) + \$1.000 (fraccionado) + \$400 (embalaje) = \$9.500 
+            \item $x_{4}$: miles de litros de gasoil.
+            \item $C_{4}$: coeficiente de $x_{4}$.\\
         \end{itemize}
 \end{itemize}
 
@@ -1424,7 +1426,7 @@ Calculamos el costo reducido para ver a partir de qué precio es conveniente pro
 
    \vspace{1em}
 
-Costo Reducido \: = $X - 
+Costo Reducido \: = $C_{4} - 
 \begin{bmatrix}
 400 & 0 & 1900 & 900 & 0
 \end{bmatrix}
@@ -1433,16 +1435,16 @@ Costo Reducido \: = $X -
 \end{bmatrix}$ \\
 
 
-    Costo Reducido = $X$ - (400 x 4 + 0 x 8 + 1900 x 0 + 900 x 0 + 0 x 1,5) = $X$ - 1600
+    Costo Reducido = $C_{4}$ - (400 x 4 + 0 x 8 + 1900 x 0 + 900 x 0 + 0 x 1,5) = $C_{4}$ - 1600
 \vspace{1em}
 
-   Ahora, el costo reducido se expresa como el precio de venta ($pv_g$) menos los costos variables, ambos de 1000 litros, para así obtener el precio mínimo de venta para que la producción sea conveniente para la empresa \\ 
+   Ahora, $C_{4}$ se expresa como $X$ menos los costos variables, ambos de 1000 litros, para así obtener el precio mínimo de venta para que la producción sea conveniente para la empresa \\ 
     
    
    \vspace{0.5em}
-   Quedando: $pv_g$ - 1600 - 9500 = $pv_g$ - 11.100.\\
+   Quedando: $X$ - 1600 - 9500 = $X$ - 11.100.\\
    
-   Luego, \( pv_g - 11.100 \geq 0 \;\Rightarrow\; pv_g \geq 11.100 \) \\
+   Luego, \( X - 11.100 \geq 0 \;\Rightarrow\; X \geq 11.100 \) \\
 
 
    Así, el precio de venta debe ser mayor o igual a 11.100. \\
