@@ -1080,11 +1080,11 @@ Al dejar de producirlo, se pierde ese aporte, y los costos fijos pasan a dividir
 
     \vspace{1em}
 
-Llamamos $b1$ a la cantidad de horas disponibles de refinado.
+Llamamos $b_1$ a la cantidad de horas disponibles de refinado.
 
 \vspace{0,5em}
 
-Primero hallamos el rango de valores de b1 para los cuales la base es factible y optima. \\
+Primero hallamos el rango de valores de $b_1$ para los cuales la base es factible y optima. \\
     
 
     \[
@@ -1125,9 +1125,8 @@ B^{-1} \times
 La propuesta del gerente es contratar 1000 horas extras al mes del personal del sector de refinado. Ya contamos con 38.000 horas de refinado. Si le sumamos las 1000 horas que sugiere el gerente, tendríamos un total de 39.000 horas. Como 39.000 es menor o igual a 40.000, la base sigue siendo factible y optima.
     \vspace{1em}
     
-Además, en el dual tenemos que y1 = 400. \newline
- y1 es la variable que representa el monto que ganaríamos por cada hora extra de refinado.
-Por lo tanto, si agregamos 1000 horas de refinado, la empresa ganaría un extra (bruto) de 1000 x 400 = \$400.000
+Además, en el dual tenemos que $y_1$ = 400, con $y_1$ siendo la variable que representa el monto que ganaríamos por cada hora extra de refinado.
+Por lo tanto, si agregamos 1000 horas de refinado, la empresa ganaría un extra (bruto) de 1000 x 400 = \$400.000.
 Pero esas horas extra tienen un costo, y dicho costo no puede exceder de los \$400 ya que sino dejaría de ser conveniente.
     
     \vspace{1em}
@@ -1140,7 +1139,7 @@ donde:
 \item 400.000 es la ganancia por las mil horas extra
 \item Y es el costo de cada hora extra.
 \end{itemize}
-\\
+
 \vspace{1em}
     \item {\bfseries\large Si el director decide pagar por hora extra la mitad del valor máximo indicado en el punto anterior, ¿en cuánto
     aumentará la ganacia mensual de la compañía?} \\
@@ -1174,12 +1173,10 @@ donde:
     
         \end{itemize}
     \end{itemize}
-    \\
-     Esto modifica la función objetivo, ya que cambia la ganacia generada a partir de la venta de 1.000 litros de combustible de vehículos. \\ 
+    
+    Esto modifica la función objetivo, ya que cambia la ganacia generada a partir de la venta de 1.000 litros de combustible de vehículos. \\ 
     La nueva función objetivo es: Maximizar 5.900 $x_{1}$ + 3.100 $x_{2}$ + 1.200 $x_{3}$ \\
 
-    Esto modifica el plan óptimo original, ya que el nuevo coeficiente de $x_{3}$ altera la estructura de la función objetivo. \\
-    Como cambia el plan óptimo, calculamos la nueva planificación óptima. \\
 
     \underline{Función objetivo}: 
 
@@ -1191,34 +1188,60 @@ donde:
 
     \clearpage
 
-    \underline{Restricciones}: 
 
-    \begin{itemize}
+    Ahora, para determinar si el plan de producción óptimo cambia o no, hacemos un ánalisis de sensibilidad para hallar el rango
+    de valores de $C_{2}$ para los cuales la base actual sigue siendo factible y óptima. Además, como $x_{2}$ es una variable basica,
+    el analisis de sensibilidad queda de la sigueinte manera: \\
 
-        \item Refinado (máximo 38.000 h): 10 $x_{1}$ + 5 $x_{2}$ + 3 $x_{3}$ $\leq$ 38.000
-        \item Fraccionado (máximo 80.000 h): 20 $x_{1}$ + 10 $x_{2}$ + 6 $x_{3}$ $\leq$ 80.000
-        \item Embalaje Combustible Aviones (máximo 4.000 h): 4 $x_{1}$ $\leq$ 4.000 $\rightarrow$ $x_{1}$ $\leq$ 1.000.
-        \item Embalaje Combustible Vehículos (máximo 6.000 h): 2 $x_{2}$ $\leq$ 6.000 $\rightarrow$ $x_{2}$ $\leq$ 3.000.
-        \item Embalaje K (máximo 7.000 h): $x_{3}$ $\leq$ 7.000
-        \item Condiciones de no negatividad: $x_{1}$ $\geq$ 0, $x_{2}$ $\geq$ 0, $x_{3}$ $\geq$ 0\\
+    \begin{center}
+    $C_{N} - C_{B}B^{-1}A_N \leq (0, 0, 0)$
+    \end{center}
+        \[
+            \begin{bmatrix}
+                0           &    0	         &    0          \\
+            \end{bmatrix}  - \begin{bmatrix}
+                5900           &    C_2	         &    1200 & 0 & 0          \\
+            \end{bmatrix} \begin{bmatrix}
+            0           & 0 &    1	        &   0            &	0 \\
+            0           & 0 &    0	        &   1            &	0 \\
+          \frac{1}{3}   & 0 & -\frac{10}{3} & -\frac{5}{3}   &	0 \\
+           -2           & 1 &    0	        &   0            &	0 \\
+           -\frac{1}{3} & 0 & \frac{10}{3}	& \frac{5}{3}    &	1 \\
+        \end{bmatrix}    
+        \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & 0 & 0 \\
+        0 & 1 & 0 \\
+        0 & 0 & 1 \\
+        0 & 0 & 0 \\
+        \end{bmatrix}
+        \leq (0, 0, 0) \] 
 
-    \end{itemize}
+    \[
+        \begin{bmatrix}
+            -5900           &    -C_2	         &    -1200 & 0 & 0          \\
+        \end{bmatrix}  \begin{bmatrix}
+            0           &    1	         &   0            \\
+            0           &     0	         &   1            \\
+          \frac{1}{3}   &  -\frac{10}{3} & -\frac{5}{3}   \\
+           -2           &     0	         &   0            \\
+           -\frac{1}{3} &  \frac{10}{3}	 & \frac{5}{3}    \\
+        \end{bmatrix}  
+        \leq (0, 0, 0)  
+    \]
 
-    \underline{Solucion del Modelo}: 
-
-    \begin{itemize}
-
-        \item $x_{1}$ = 1.000
-        \item $x_{2}$ = 3.000
-        \item $x_{3}$ = 4.333,333333
-        \item $Z$ = \$20.400.000\\
-
-    \end{itemize}
-    \\
-    Los gastos fijos se mantienen. 
-    Luego, la ganancia total de la compañía es: \$20.400.000 - \$13.500.000 = \$6.900.000. \\
     
-    
+    \[
+        \begin{bmatrix}
+            -400           &    -1900	         &    2000 - C_2           \\
+        \end{bmatrix}  
+        \leq \begin{bmatrix}
+            0           &    0	         &    0          \\
+        \end{bmatrix} 
+    \]
+
+    Luego, para que la base siga siendo factible y óptima, debe ocurrir que $C_2 \geq$ 2.000. 
+    Entonces con $C_2 = $ 3.100, la base sigue siendo factible y óptima, y por lo tanto, el plan de producción óptimo permanece igual.\\
 
     \textbf{Conclusión }:
     \vspace{0,5em}
@@ -1255,10 +1278,84 @@ donde:
     Esto modifica la función objetivo, ya que cambia la ganacia generada a partir de la venta de 1.000 litros de kerosene. \\ 
     La nueva función objetivo es: \\
     Maximizar 5.900 $x_{1}$ + 2.900 $x_{2}$ + 1.800 $x_{3}$ \\
-
-    Esto modifica el plan óptimo original, ya que el nuevo coeficiente de $x_{3}$ altera la estructura de la función objetivo. \\
-    Como cambia el plan óptimo, calculamos la nueva planificación óptima. \\
     
+
+    \underline{Función objetivo}: 
+
+    \begin{center}
+      
+        Maximizar 5.900 $x_{1}$ + 2.900 $x_{2}$ + 1.800 $x_{3}$
+
+    \end{center}
+
+    Ahora, para determinar si el plan de producción óptimo cambia o no, hacemos un ánalisis de sensibilidad para hallar el rango
+    de valores de $C_{3}$ para los cuales la base actual sigue siendo factible y óptima. Además, como $x_{3}$ es una variable basica,
+    el analisis de sensibilidad queda de la sigueinte manera: \\
+
+    \clearpage
+    \begin{center}
+        $C_{N} - C_{B}B^{-1}A_N \leq (0, 0, 0)$
+        \end{center}
+
+        \[
+            \begin{bmatrix}
+                0           &    0	         &    0          \\
+            \end{bmatrix}  - \begin{bmatrix}
+                5900           &    2900	         &    C_3 & 0 & 0          \\
+            \end{bmatrix} \begin{bmatrix}
+            0           & 0 &    1	        &   0            &	0 \\
+            0           & 0 &    0	        &   1            &	0 \\
+          \frac{1}{3}   & 0 & -\frac{10}{3} & -\frac{5}{3}   &	0 \\
+           -2           & 1 &    0	        &   0            &	0 \\
+           -\frac{1}{3} & 0 & \frac{10}{3}	& \frac{5}{3}    &	1 \\
+        \end{bmatrix}    
+        \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & 0 & 0 \\
+        0 & 1 & 0 \\
+        0 & 0 & 1 \\
+        0 & 0 & 0 \\
+        \end{bmatrix}
+        \leq (0, 0, 0) \] 
+
+    \[
+        \begin{bmatrix}
+            -5900           &    -2900	         &    -C_3 & 0 & 0          \\
+        \end{bmatrix}  \begin{bmatrix}
+            0           &    1	         &   0            \\
+            0           &     0	         &   1            \\
+          \frac{1}{3}   &  -\frac{10}{3} & -\frac{5}{3}   \\
+           -2           &     0	         &   0            \\
+           -\frac{1}{3} &  \frac{10}{3}	 & \frac{5}{3}    \\
+        \end{bmatrix}  
+        \leq (0, 0, 0)  
+    \]
+
+    
+    \[
+        \begin{bmatrix}
+            \frac{-C_3}{3}          &    \frac{10C_3 - 17700}{3} 	         &    \frac{5C_3 - 8700}{3}           \\
+        \end{bmatrix}  
+        \leq \begin{bmatrix}
+            0           &    0	         &    0          \\
+        \end{bmatrix} 
+    \]
+
+    Es decir:
+
+    \begin{itemize}
+
+        \item $C_3 \geq 0$
+        \item $C_3 \leq$ 1.770
+        \item $C_3 \leq$ 1.740\\
+
+    \end{itemize}
+
+    Luego, para que la base siga siendo factible y óptima, debe ocurrir que 0 $\leq C_3 \leq$ 1.740.
+    Entonces con $C_3 = $ 1.800, la base ya no es factible ni óptima, y por lo tanto, hace falta reoptimizar para
+    obtener el nuevo plan de producción.\\
+
+    \textbf{Reoptimisación }:\\
 
     \underline{Función objetivo}: 
 
@@ -1291,7 +1388,8 @@ donde:
         \item $Z$ = \$22.560.000\\
 
     \end{itemize}
-    \\
+    
+
     Los gastos fijos se mantienen. Luego, la ganancia total de la compañía es: \$22.560.000 - \$13.500.000 = \$9.060.000. \\
 
     \textbf{Conclusión }:
@@ -1362,7 +1460,7 @@ Control de calidad (máximo 20.000 h): 5 $x_{1}$ + 3 $x_{2}$ + 2 $x_{3}$ $\leq$ 
 
 Si producimos la misma cantidad de litros de combustible que en el plan original, entonces la restricción no se cumpliría:
 
-$5 \times 1.000 + 3 \times 3.000 + 2 \times 4.333{,}33 = 22.666{,}66 \not\leq 20.000$
+5 $\times$ 1.000 + 3 $\times$ 3.000 + 2 $\times$ 4.333,33 = 22.666,66 $\not\leq$ 20.000
 
 
 \vspace{1em}
@@ -1401,7 +1499,8 @@ Por lo tanto, hay que cambiar el plan óptimo. Damos la nueva planificación óp
         \item $Z$ = \$18.200.000 \\\
 
     \end{itemize}
-    \\
+    
+
     Los gastos fijos se mantienen. Luego, la ganancia total de la compañía es: \$18.200.000 - \$13.500.000 = \$4.700.000. \\
 \end{enumerate}
 
