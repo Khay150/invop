@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1747671983.44635 "d:/FRAN/Educacion/UBA/invop/invop-tp-1/tp1_latex.tex" "build/tp1_latex.pdf" "tp1_latex" 1747671984.34844 0
+["pdflatex"] 1748023370.104 "d:/FRAN/Educacion/UBA/invop/invop-tp-1/tp1_latex.tex" "build/tp1_latex.pdf" "tp1_latex" 1748023371.18984 0
   "AEDmacros.tex" 1746982000 5631 b5cf5a98e67fe272045f3d82b1b77c2d ""
   "C:/Users/franv/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1747663716 81068 299f700eb05b1217173e62b88b513bd0 ""
   "C:/Users/franv/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1712419985 24236046 a5946d3205073aa149084303d3882a1c ""
@@ -113,12 +113,12 @@
   "C:/Users/franv/AppData/Local/Programs/MiKTeX/tex/latex/lm/t1lmtt.fd" 1430474546 2682 555da1faa2e266801e4b221d01a42cb5 ""
   "C:/Users/franv/AppData/Local/Programs/MiKTeX/tex/latex/lm/ts1lmr.fd" 1430474546 1914 884882d7ebb0fd65cea93fca77ff6f5a ""
   "C:/Users/franv/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1700127522 55487 80a65caedd3722f4c20a14a69e785d8f ""
-  "build/tp1_latex.aux" 1747671984 414 cb90c57a81ff5dcf1de2b5a271327caa "pdflatex"
+  "build/tp1_latex.aux" 1748023370 414 cb90c57a81ff5dcf1de2b5a271327caa "pdflatex"
   "caratula.sty" 1746982732 11506 4e5fca3dc9a876268afb62b7140613eb ""
-  "d:/FRAN/Educacion/UBA/invop/invop-tp-1/tp1_latex.tex" 1747671982 53291 b5dddae1444390dc40fa5d0de766ea1c ""
+  "d:/FRAN/Educacion/UBA/invop/invop-tp-1/tp1_latex.tex" 1748023369 53291 b5dddae1444390dc40fa5d0de766ea1c ""
   "logo_dc.jpg" 1693401348 128041 860ed529f2e122b3922f6ce21e3273f1 ""
   "logo_uba.jpg" 1693401349 229119 10f3a63be47e1e95e44f30008ec3af50 ""
-  "tp1_latex.tex" 1747671982 53291 b5dddae1444390dc40fa5d0de766ea1c ""
+  "tp1_latex.tex" 1748023369 53291 b5dddae1444390dc40fa5d0de766ea1c ""
   (generated)
   "build/tp1_latex.aux"
   "build/tp1_latex.log"
