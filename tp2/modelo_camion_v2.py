@@ -43,7 +43,7 @@ class InstanciaRecorridoMixto:
 
 
 def cargar_instancia():
-    nombre_archivo = "prueba2.txt"
+    nombre_archivo = "Prueba_500C.txt"
     instancia = InstanciaRecorridoMixto()
     instancia.leer_datos(nombre_archivo)
     return instancia
@@ -58,7 +58,8 @@ def agregar_variables(prob, instancia):
 
     n = instancia.cantidad_clientes
     N = list(range(n + 1))  # clientes + depósito (0)
-
+    
+    
     # Variables x_ij
     for i in N:
         for j in N:
@@ -69,17 +70,7 @@ def agregar_variables(prob, instancia):
                 lb.append(0)
                 ub.append(1)
 
-    # Variables z_ij
-    for i in N:
-        for j in range(1, n + 1):
-            if i != j:
-                nombres.append(f"z_{i}_{j}")
-                obj.append(instancia.costo_repartidor)
-                tipos.append("B")
-                lb.append(0)
-                ub.append(1)
-
-    # Variables u_i (para MTZ)
+    # variables u_i (para MTZ)
     for i in range(1, n + 1):
         nombres.append(f"u_{i}")
         obj.append(0)
@@ -99,7 +90,7 @@ def agregar_variables(prob, instancia):
 
 def agregar_restricciones(prob, instancia):
     n = instancia.cantidad_clientes
-    N = list(range(n + 1))  # clientes + depósito (0)
+    N = list(range(n + 1)) # clientes + depósito (0)
 
     def var(name):
         return prob.variables.get_indices(name)
@@ -131,7 +122,7 @@ def agregar_restricciones(prob, instancia):
         prob.linear_constraints.add(
             lin_expr=[cplex.SparsePair(
                 ind=[var(f"x_{i}_{j}") for i in N if i != j],
-                val=[1]*(n)
+                val=[1]*n
             )],
             senses=["E"],
             rhs=[1],
@@ -143,7 +134,7 @@ def agregar_restricciones(prob, instancia):
         prob.linear_constraints.add(
             lin_expr=[cplex.SparsePair(
                 ind=[var(f"x_{i}_{j}") for j in N if j != i],
-                val=[1]*(n)
+                val=[1]*n
             )],
             senses=["E"],
             rhs=[1],
@@ -156,7 +147,7 @@ def agregar_restricciones(prob, instancia):
             if i != j:
                 prob.linear_constraints.add(
                     lin_expr=[cplex.SparsePair(
-                        ind=[f"u_{i}", f"u_{j}", f"x_{i}_{j}"],
+                        ind=[var(f"u_{i}"), var(f"u_{j}"), var(f"x_{i}_{j}")],
                         val=[1, -1, n]
                     )],
                     senses=["L"],
