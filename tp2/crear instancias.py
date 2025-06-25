@@ -1,8 +1,8 @@
 import random
 import math
 
-def generar_instancia_grande(nombre_archivo, cant_clientes=500, costo_repartidor=5, dist_max=15,
-                            cant_refrigerados=20, cant_exclusivos=30, porcentaje_conectividad=0.01, rango_coord=1000):
+def generar_instancia_grande(nombre_archivo, cant_clientes=20, costo_repartidor=5, dist_max=50,
+                            cant_refrigerados=7, cant_exclusivos=11, porcentaje_conectividad=1, rango_coord=100):
 
     ids_clientes = list(range(1, cant_clientes + 1))
 
@@ -40,4 +40,4 @@ def generar_instancia_grande(nombre_archivo, cant_clientes=500, costo_repartidor
     print(f"Instancia guardada en {nombre_archivo}")
 
 # Ejemplo de uso:
-generar_instancia_grande("Prueba_500C.txt")
+generar_instancia_grande("Prueba4.txt")

@@ -43,7 +43,7 @@ class InstanciaRecorridoMixto:
 
 
 def cargar_instancia():
-    nombre_archivo = "Prueba_500C.txt"
+    nombre_archivo = "prueba3.txt"
     instancia = InstanciaRecorridoMixto()
     instancia.leer_datos(nombre_archivo)
     return instancia
