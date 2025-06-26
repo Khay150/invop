@@ -9,7 +9,7 @@ VALOR_GRANDE = 10**6
 # 1. Generar instancia inicial
 # --------------------------
 
-def generar_instancia(nombre_archivo, cant_clientes=10, costo_repartidor=5, dist_max=50,
+def generar_instancia(nombre_archivo, cant_clientes=20, costo_repartidor=5, dist_max=50,
                       cant_refrigerados=7, cant_exclusivos=11, porcentaje_conectividad=0.1, rango_coord=100):
     ids_clientes = list(range(1, cant_clientes + 1))
     refrigerados = sorted(random.sample(ids_clientes, cant_refrigerados))
