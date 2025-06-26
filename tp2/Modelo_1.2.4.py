@@ -57,7 +57,7 @@ class InstanciaRecorridoMixto:
         f.close()
 
 def cargar_instancia():
-    nombre_archivo = "prueba8.txt"
+    nombre_archivo = "Instancia_1000.txt"
     instancia = InstanciaRecorridoMixto()
     instancia.leer_datos(nombre_archivo)
     return instancia
@@ -240,7 +240,7 @@ def armar_lp(prob, instancia):
     prob.write("modelo_camion_y_repartidores.lp")
 
 def resolver_lp(prob):
-    prob.parameters.timelimit.set(60)
+    prob.parameters.timelimit.set(900)
     prob.solve()
 
 def mostrar_solucion(prob, instancia):

@@ -10,12 +10,21 @@ VALOR_GRANDE = 10**6
 # --------------------------
 
 def generar_instancia(nombre_archivo, cant_clientes=20, costo_repartidor=5, dist_max=50,
-                      cant_refrigerados=7, cant_exclusivos=11, porcentaje_conectividad=0.1, rango_coord=100):
+                      cant_refrigerados=7, cant_exclusivos=11, porcentaje_conectividad=0.1, rango_coord=100, tipo_distribucion='uniforme'):
     ids_clientes = list(range(1, cant_clientes + 1))
     refrigerados = sorted(random.sample(ids_clientes, cant_refrigerados))
     restantes = list(set(ids_clientes) - set(refrigerados))
     exclusivos = sorted(random.sample(restantes, min(cant_exclusivos, len(restantes))))
-    coords = {i: (random.randint(0, rango_coord), random.randint(0, rango_coord)) for i in [0] + ids_clientes}
+    
+    # Selección de distribución
+    if tipo_distribucion == 'uniforme':
+        coords = generar_coords_uniforme(cant_clientes, rango_coord)
+    elif tipo_distribucion == 'clusters':
+        coords = generar_coords_cluster(cant_clientes, rango_coord)
+    elif tipo_distribucion == 'anillo':
+        coords = generar_coords_anillo(cant_clientes, rango_coord)
+    else:
+        coords = {i: (random.randint(0, rango_coord), random.randint(0, rango_coord)) for i in [0] + ids_clientes}
 
     with open(nombre_archivo, 'w') as f:
         f.write(f"{cant_clientes}\n")
@@ -49,6 +58,47 @@ def generar_instancia(nombre_archivo, cant_clientes=20, costo_repartidor=5, dist
 
     print(f"Instancia generada y guardada en {nombre_archivo}")
 
+
+
+def generar_coords_uniforme(cant_clientes, rango_coord):
+    coords = {i: (random.uniform(0, rango_coord), random.uniform(0, rango_coord)) for i in range(1, cant_clientes + 1)}
+    coords[0] = (rango_coord / 2, rango_coord / 2)  # depósito en el centro
+    return coords
+
+def generar_coords_cluster(cant_clientes, rango_coord, clusters=3, std=0.1):
+    centros = [(random.uniform(0.2 * rango_coord, 0.8 * rango_coord),
+                random.uniform(0.2 * rango_coord, 0.8 * rango_coord)) for _ in range(clusters)]
+    coords = {}
+    for i in range(1, cant_clientes + 1):
+        cx, cy = random.choice(centros)
+        x = np.clip(random.gauss(cx, std * rango_coord), 0, rango_coord)
+        y = np.clip(random.gauss(cy, std * rango_coord), 0, rango_coord)
+        coords[i] = (x, y)
+    coords[0] = (rango_coord / 2, rango_coord / 2)
+    return coords
+
+def generar_coords_anillo(cant_clientes, rango_coord, prop_nucleo=0.2, radio_interno=0.3, radio_externo=0.5):
+    centro = (rango_coord / 2, rango_coord / 2)
+    n_nucleo = int(cant_clientes * prop_nucleo)
+    n_anillo = cant_clientes - n_nucleo
+    coords = {}
+
+    # Núcleo
+    for i in range(1, n_nucleo + 1):
+        x = np.clip(random.gauss(centro[0], 0.05 * rango_coord), 0, rango_coord)
+        y = np.clip(random.gauss(centro[1], 0.05 * rango_coord), 0, rango_coord)
+        coords[i] = (x, y)
+
+    # Anillo
+    for j in range(1, n_anillo + 1):
+        angle = random.uniform(0, 2 * math.pi)
+        radius = random.uniform(radio_interno * rango_coord, radio_externo * rango_coord)
+        x = centro[0] + radius * math.cos(angle)
+        y = centro[1] + radius * math.sin(angle)
+        coords[n_nucleo + j] = (np.clip(x, 0, rango_coord), np.clip(y, 0, rango_coord))
+
+    coords[0] = centro
+    return coords
 # --------------------------
 # 2. Leer instancia y grafo
 # --------------------------
@@ -157,8 +207,8 @@ def actualizar_costos_minimos(nombre_archivo, salida="Instancia_F.txt"):
 # --------------------------
 
 if __name__ == "__main__":
-    generar_instancia("Instancia_Original.txt", cant_clientes=10, costo_repartidor=5, dist_max=50,
-                      cant_refrigerados=7, cant_exclusivos=3, porcentaje_conectividad=0.5, rango_coord=100)
+    generar_instancia("Instancia_500.txt", cant_clientes=1000, costo_repartidor=500, dist_max=9000,
+                      cant_refrigerados=325, cant_exclusivos=597, porcentaje_conectividad=0.5, rango_coord=10000)
     
-    actualizar_distancias_minimas("Instancia_Original.txt", "Instancia_Dist_Mod.txt")
-    actualizar_costos_minimos("Instancia_Dist_Mod.txt", "Instancia_F.txt")
+    actualizar_distancias_minimas("Instancia_500.txt", "Instancia_500.txt")
+    actualizar_costos_minimos("Instancia_500.txt", "Instancia_500.txt")
