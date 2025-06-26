@@ -145,7 +145,6 @@ def agregar_restricciones(prob, instancia):
                 senses=["L"], rhs=[1], names=[f"refrigerado_{i}"]
             )
 
-
     #4
     for j in N:
         if j != 0:  # excluye el depósito
@@ -179,19 +178,17 @@ def agregar_restricciones(prob, instancia):
     )
 
     #8
-    for i in range(1, n + 1):
-        for j in range(1, n + 1):
+    for i in range(1, n+1):
+        for j in range(1, n+1):
             if i != j:
-                ind = [var(f"u_{i}"), var(f"u_{j}"), var(f"x_{i}_{j}")]
-                val = [1, -1, n]
-                if instancia.a_ij.get((i, j), 0) == 1:
-                    ind.append(var(f"z_{i}_{j}"))
-                    val.append(M1)
                 prob.linear_constraints.add(
-                    lin_expr=[cplex.SparsePair(ind=ind, val=val)],
+                    lin_expr=[cplex.SparsePair(
+                        ind=[var(f"u_{i}"), var(f"u_{j}"), var(f"x_{i}_{j}")],
+                        val=[1, -1, n]
+                    )],
                     senses=["L"],
-                    rhs=[n - 1 + M1],
-                    names=[f"mtz_repartidor_{i}_{j}"]
+                    rhs=[n-1],
+                    names=[f"mtz_{i}_{j}"]
                 )
 
     #9
@@ -259,12 +256,40 @@ def mostrar_solucion(prob, instancia):
         if valor > TOLERANCE:
             print(f"{nombre} = {round(valor, 6)}")  #Modificado para evitar casos de 1.0000000000000002 por ejemplo
 
+
 def main():
     instancia = cargar_instancia()
     prob = cplex.Cplex()
     armar_lp(prob, instancia)
     resolver_lp(prob)
     mostrar_solucion(prob, instancia)
+    print_camion_route(prob, instancia)
+    print_repartidores_rutas(prob, instancia)
+    
+def print_camion_route(prob, instancia):
+    n = instancia.cantidad_clientes
+    edges = [(i, j) for i in range(n + 1) for j in range(n + 1)
+             if i != j and prob.solution.get_values(f"x_{i}_{j}") > 0.5]
+    succ = {i: j for i, j in edges}
+    camino = []
+    nodo = 0
+    while True:
+        camino.append(nodo)
+        nodo = succ.get(nodo, None)
+        if nodo is None or nodo == 0:
+            camino.append(0)
+            break
+    print("Ruta camión:", " → ".join(map(str, camino)))
+
+def print_repartidores_rutas(prob, instancia):
+    print("\nRutas de repartidores (z_ij = 1):")
+    valores = prob.solution.get_values()
+    nombres = prob.variables.get_names()
+
+    for nombre, valor in zip(nombres, valores):
+        if nombre.startswith("z_") and valor > 1e-6:
+            i, j = map(int, nombre[2:].split("_"))
+            print(f"Repartidor: {i} → {j}")
 
 if __name__ == '__main__':
     main()
