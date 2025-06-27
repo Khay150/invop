@@ -208,8 +208,15 @@ def actualizar_costos_minimos(nombre_archivo, salida="Instancia_F.txt"):
 # --------------------------
 
 if __name__ == "__main__":
-    generar_instancia("Instancia_200.txt", cant_clientes=200, costo_repartidor=100, dist_max=1500,
-                      cant_refrigerados=20, cant_exclusivos=10, porcentaje_conectividad=0.5, rango_coord=1000, tipo_distribucion='uniforme')
+    generar_instancia("Instancia_200_Cluster.txt", cant_clientes=200, costo_repartidor=50, dist_max=150,
+                      cant_refrigerados=40, cant_exclusivos=40, porcentaje_conectividad=0.5, rango_coord=1000, tipo_distribucion='clusters')
     
-    actualizar_distancias_minimas("Instancia_500.txt", "Instancia_200.txt")
-    actualizar_costos_minimos("Instancia_500.txt", "Instancia_200.txt")
+    actualizar_distancias_minimas("Instancia_200_Cluster.txt", "Instancia_200_Cluster.txt")
+    actualizar_costos_minimos("Instancia_200_Cluster.txt", "Instancia_200_Cluster.txt")
+    
+# cant_clientes = 200
+# costo_repartidor = 50
+# dist_max = 150
+# cant_refrigerados = 40 (20%)
+# cant_exclusivos = 40 (20%)
+# Distribucion Clusters de 3
