@@ -1,5 +1,5 @@
-#Modelo 2.2
-#Modelo con la nueva metodología (camiones y repartidores), con restricción de exclusividad y sin restricción de 4 repartos mínimos por repartidor.
+#Modelo 2.1
+#Modelo con la nueva metodología (camiones y repartidores), sin restricciones de exclusividad ni de 4 repartos mínimos por repartidor.
 
 import sys
 import cplex
@@ -57,7 +57,7 @@ class InstanciaRecorridoMixto:
         f.close()
 
 def cargar_instancia():
-    nombre_archivo = "Instancia_8.txt"
+    nombre_archivo = "Instancia_9.txt"
     instancia = InstanciaRecorridoMixto()
     instancia.leer_datos(nombre_archivo)
     return instancia
@@ -229,6 +229,7 @@ def agregar_restricciones(prob, instancia):
                 rhs=[0],
                 names=[f"z_{i}_0_igual_cero"]
             )
+
     #13
     for i in N:
         for j in N:
@@ -255,14 +256,6 @@ def agregar_restricciones(prob, instancia):
                 rhs=[0],
                 names=[f"reparto_condicional_{i}"]
             )
-
-
-    #15
-    for j in instancia.exclusivos:
-        prob.linear_constraints.add(
-            lin_expr=[cplex.SparsePair(ind=[var(f"x_{i}_{j}") for i in N if i != j], val=[1]*n)],
-            senses=["E"], rhs=[1], names=[f"exclusivo_{j}"]
-        )
 
 
 def armar_lp(prob, instancia):
@@ -292,6 +285,17 @@ def mostrar_solucion(prob, instancia):
 def main():
     instancia = cargar_instancia()
     prob = cplex.Cplex()
+    #--- BÚSQUEDA ----------------------------------------------------------
+    #prob.parameters.mip.strategy.search.set(1)         # 1 = depth-first (menos RAM)
+    prob.parameters.mip.strategy.nodeselect.set(1)
+    #--- HEURÍSTICAS -------------------------------------------------------
+    #prob.parameters.heuristic.set(20)                # 3 % de tiempo raíz a heurísticas
+    #prob.parameters.mip.strategy.heuristicfreq.set(20) # cada 20 nodos internos
+
+    #--- CORTES ------------------------------------------------------------                                           
+    prob.parameters.mip.cuts.gomory.set(2)    # agresivo
+    prob.parameters.mip.cuts.mircut.set(2)
+
     armar_lp(prob, instancia)
     resolver_lp(prob)
     mostrar_solucion(prob, instancia)
