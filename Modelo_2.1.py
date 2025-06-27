@@ -57,7 +57,7 @@ class InstanciaRecorridoMixto:
         f.close()
 
 def cargar_instancia():
-    nombre_archivo = "Instancia_4.txt"
+    nombre_archivo = "Instancia_8.txt"
     instancia = InstanciaRecorridoMixto()
     instancia.leer_datos(nombre_archivo)
     return instancia
