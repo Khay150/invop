@@ -2,6 +2,7 @@ import random
 import math
 import heapq
 from collections import defaultdict
+import numpy as np
 
 VALOR_GRANDE = 10**6
 
@@ -45,7 +46,7 @@ def generar_instancia(nombre_archivo, cant_clientes=20, costo_repartidor=5, dist
                     xi, yi = coords[i]
                     xj, yj = coords[j]
                     dist = round(math.hypot(xi - xj, yi - yj))
-                    costo = random.randint(1, 10)
+                    costo = dist
                     aristas[(i, j)] = (dist, costo)
 
         for i in nodos:
@@ -207,8 +208,8 @@ def actualizar_costos_minimos(nombre_archivo, salida="Instancia_F.txt"):
 # --------------------------
 
 if __name__ == "__main__":
-    generar_instancia("Instancia_500.txt", cant_clientes=1000, costo_repartidor=500, dist_max=9000,
-                      cant_refrigerados=325, cant_exclusivos=597, porcentaje_conectividad=0.5, rango_coord=10000)
+    generar_instancia("Instancia_200.txt", cant_clientes=200, costo_repartidor=100, dist_max=1500,
+                      cant_refrigerados=20, cant_exclusivos=10, porcentaje_conectividad=0.5, rango_coord=1000, tipo_distribucion='uniforme')
     
-    actualizar_distancias_minimas("Instancia_500.txt", "Instancia_500.txt")
-    actualizar_costos_minimos("Instancia_500.txt", "Instancia_500.txt")
+    actualizar_distancias_minimas("Instancia_500.txt", "Instancia_200.txt")
+    actualizar_costos_minimos("Instancia_500.txt", "Instancia_200.txt")
