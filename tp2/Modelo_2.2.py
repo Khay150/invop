@@ -57,7 +57,7 @@ class InstanciaRecorridoMixto:
         f.close()
 
 def cargar_instancia():
-    nombre_archivo = "Instancia_5.txt"
+    nombre_archivo = "Instancia_4.txt"
     instancia = InstanciaRecorridoMixto()
     instancia.leer_datos(nombre_archivo)
     return instancia
@@ -221,19 +221,49 @@ def agregar_restricciones(prob, instancia):
     )
 
     #12
-    prob.linear_constraints.add(
-            lin_expr=[cplex.SparsePair(ind=[f"z_{i}_0"], val=[1])],
-            senses=["E"],
-            rhs=[0],
-            names=[f"z_{i}_0_igual_cero"]
-        )
-
+    for i in N:
+        if instancia.a_ij.get((i, 0), 0) == 1:
+            prob.linear_constraints.add(
+                lin_expr=[cplex.SparsePair(ind=[var(f"z_{i}_0")], val=[1])],
+                senses=["E"],
+                rhs=[0],
+                names=[f"z_{i}_0_igual_cero"]
+            )
     #13
+    for i in N:
+        for j in N:
+            if i != j:
+                if instancia.a_ij.get((i, j), 0) == 1 and instancia.a_ij.get((j, i), 0) == 1:
+                    prob.linear_constraints.add(
+                        lin_expr=[cplex.SparsePair(
+                            ind=[var(f"z_{i}_{j}"), var(f"z_{j}_{i}")],
+                            val=[1, 1]
+                        )],
+                        senses=["L"],
+                        rhs=[1],
+                        names=[f"anti_ciclo_repartidor_{i}_{j}"]
+                    )
+
+    #14
+    for i in N:
+        z_ij = [var(f"z_{i}_{j}") for j in N if i != j and instancia.a_ij.get((i, j), 0) == 1]
+        x_ij = [var(f"x_{i}_{j}") for j in N if i != j]
+        if z_ij and x_ij:
+            prob.linear_constraints.add(
+                lin_expr=[cplex.SparsePair(ind=z_ij + x_ij, val=[1]*len(z_ij) + [-(n - 1)]*len(x_ij))],
+                senses=["L"],
+                rhs=[0],
+                names=[f"reparto_condicional_{i}"]
+            )
+
+
+    #15
     for j in instancia.exclusivos:
         prob.linear_constraints.add(
             lin_expr=[cplex.SparsePair(ind=[var(f"x_{i}_{j}") for i in N if i != j], val=[1]*n)],
             senses=["E"], rhs=[1], names=[f"exclusivo_{j}"]
         )
+
 
 def armar_lp(prob, instancia):
     agregar_variables(prob, instancia)
