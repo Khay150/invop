@@ -57,7 +57,7 @@ class InstanciaRecorridoMixto:
         f.close()
 
 def cargar_instancia():
-    nombre_archivo = "Instancia_9.txt"
+    nombre_archivo = "Instancia_5.txt"
     instancia = InstanciaRecorridoMixto()
     instancia.leer_datos(nombre_archivo)
     return instancia
@@ -226,14 +226,6 @@ def agregar_restricciones(prob, instancia):
             senses=["E"],
             rhs=[0],
             names=[f"z_{i}_0_igual_cero"]
-        )
-    
-    #13
-    prob.linear_constraints.add(
-            lin_expr=[cplex.SparsePair(ind=[f"z_0_{j}"], val=[1])],
-            senses=["E"],
-            rhs=[0],
-            names=[f"z_0_{j}_igual_cero"]
         )
 
 def armar_lp(prob, instancia):
