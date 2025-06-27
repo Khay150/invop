@@ -57,7 +57,7 @@ class InstanciaRecorridoMixto:
         f.close()
 
 def cargar_instancia():
-    nombre_archivo = "prueba8.txt"
+    nombre_archivo = "Instancia_1.txt"
     instancia = InstanciaRecorridoMixto()
     instancia.leer_datos(nombre_archivo)
     return instancia
@@ -122,6 +122,10 @@ def agregar_restricciones(prob, instancia):
             prob.linear_constraints.add(
                 lin_expr=[cplex.SparsePair(ind=z_ij + [var(f"w_{i}")], val=[1]*len(z_ij) + [-(n - 1)])],
                 senses=["L"], rhs=[0], names=[f"max_reparto_{i}"]
+            )
+            prob.linear_constraints.add(
+                lin_expr=[cplex.SparsePair(ind=z_ij + [var(f"w_{i}")], val=[1]*len(z_ij) + [-1])],
+                senses=["G"], rhs=[0], names=[f"min_reparto_{i}"]
             )
 
     #2
@@ -230,7 +234,7 @@ def armar_lp(prob, instancia):
     prob.write("modelo_camion_y_repartidores.lp")
 
 def resolver_lp(prob):
-    prob.parameters.timelimit.set(60)
+    prob.parameters.timelimit.set(900)
     prob.solve()
 
 def mostrar_solucion(prob, instancia):
