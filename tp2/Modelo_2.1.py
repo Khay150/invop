@@ -1,4 +1,4 @@
-#Modelo 1.2.1
+#Modelo 2.1
 #Modelo con la nueva metodología (camiones y repartidores), sin restricciones de exclusividad ni de 4 repartos mínimos por repartidor.
 
 import sys

@@ -1,5 +1,5 @@
-#Modelo 1.2.2
-#Modelo con la nueva metodología (camiones y repartidores), con restricción de exclusividad y sin restricción de 4 repartos mínimos por repartidor.
+#Modelo 2.3
+#Modelo con la nueva metodología (camiones y repartidores), con restricicón de 4 repartos mínimos por repartidor y sin restricción de exclusividad.
 
 import sys
 import cplex
@@ -217,11 +217,14 @@ def agregar_restricciones(prob, instancia):
     )
 
     #12
-    for j in instancia.exclusivos:
-        prob.linear_constraints.add(
-            lin_expr=[cplex.SparsePair(ind=[var(f"x_{i}_{j}") for i in N if i != j], val=[1]*n)],
-            senses=["E"], rhs=[1], names=[f"exclusivo_{j}"]
-        )
+    for i in N:
+        z_ij = [var(f"z_{i}_{j}") for j in N if i != j and instancia.a_ij.get((i, j), 0) == 1]
+        if z_ij:
+            prob.linear_constraints.add(
+                lin_expr=[cplex.SparsePair(ind=z_ij + [var(f"w_{i}")], val=[1]*len(z_ij) + [-4])],
+                senses=["G"], rhs=[0], names=[f"min_reparto_{i}"]
+            )
+
 
 def armar_lp(prob, instancia):
     agregar_variables(prob, instancia)

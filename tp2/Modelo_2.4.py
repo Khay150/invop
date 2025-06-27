@@ -1,5 +1,5 @@
-#Modelo 1.2.3
-#Modelo con la nueva metodología (camiones y repartidores), con restricicón de 4 repartos mínimos por repartidor y sin restricción de exclusividad.
+#Modelo 2.4
+#Modelo con la nueva metodología (camiones y repartidores) y con restricciones de exclusividad y 4 repartos mínimos por repartidor.
 
 import sys
 import cplex
@@ -23,7 +23,7 @@ class InstanciaRecorridoMixto:
 
         self.cantidad_clientes = int(f.readline())
         self.costo_repartidor = int(f.readline())
-        self.d_max = int(f.readline())
+        self.d_max = float(f.readline())
 
         self.distancias = [[1e6 for _ in range(self.cantidad_clientes + 1)] for _ in range(self.cantidad_clientes + 1)]
         self.costos = [[1e6 for _ in range(self.cantidad_clientes + 1)] for _ in range(self.cantidad_clientes + 1)]
@@ -57,7 +57,7 @@ class InstanciaRecorridoMixto:
         f.close()
 
 def cargar_instancia():
-    nombre_archivo = "prueba8.txt"
+    nombre_archivo = "Instancia_300.txt"
     instancia = InstanciaRecorridoMixto()
     instancia.leer_datos(nombre_archivo)
     return instancia
@@ -217,6 +217,13 @@ def agregar_restricciones(prob, instancia):
     )
 
     #12
+    for j in instancia.exclusivos:
+        prob.linear_constraints.add(
+            lin_expr=[cplex.SparsePair(ind=[var(f"x_{i}_{j}") for i in N if i != j], val=[1]*n)],
+            senses=["E"], rhs=[1], names=[f"exclusivo_{j}"]
+        )
+
+    #13
     for i in N:
         z_ij = [var(f"z_{i}_{j}") for j in N if i != j and instancia.a_ij.get((i, j), 0) == 1]
         if z_ij:
@@ -233,7 +240,7 @@ def armar_lp(prob, instancia):
     prob.write("modelo_camion_y_repartidores.lp")
 
 def resolver_lp(prob):
-    prob.parameters.timelimit.set(60)
+    prob.parameters.timelimit.set(900)
     prob.solve()
 
 def mostrar_solucion(prob, instancia):
