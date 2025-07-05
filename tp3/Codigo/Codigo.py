@@ -13,7 +13,7 @@ tiempo_total = tiempo_fin - tiempo_inicio
 
 
 print("Centro óptimo:", solucion)
-print(f"Iteraciones: {iteraciones}")
-print(f"Tiempo: {tiempo_total:.6f} segundos")
+print(f"Iteraciones (Tiempo de Convergencia): {iteraciones}")
+print(f"Tiempo de Ejecucion: {tiempo_total:.6f} segundos")
 
 
