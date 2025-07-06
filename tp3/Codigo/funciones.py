@@ -6,15 +6,42 @@ from scipy.optimize import minimize_scalar
 # -------------------------------
 
 def crear_instancia(nombre_archivo="instancia.txt", n_dim=2, n_puntos=10,
-                    rango_coords=(-100, 100), rango_pesos=(1, 10), seed=None):
+                    rango_coords=(-100, 100), rango_pesos=(1, 10), distribucion="aleatorio", seed=None):
 
     if seed is not None:
         np.random.seed(seed)
 
-    puntos = np.random.uniform(rango_coords[0], rango_coords[1], size=(n_puntos, n_dim))
-    pesos = np.random.uniform(rango_pesos[0], rango_pesos[1], size=n_puntos)
+    if distribucion == "aleatorio":
+        puntos = np.random.uniform(rango_coords[0], rango_coords[1], size=(n_puntos, n_dim))
+        
+    elif distribucion == "uniforme":
+        # Crear una grilla uniforme dentro del rango
+        lado = int(np.ceil(n_puntos ** (1/n_dim)))
+        grids = [np.linspace(rango_coords[0], rango_coords[1], lado) for _ in range(n_dim)]
+        malla = np.meshgrid(*grids)
+        puntos = np.stack([m.flatten() for m in malla], axis=-1)[:n_puntos]
+        
+    elif distribucion == "clusters":
+        n_clusters = 4
+        puntos_por_cluster = n_puntos // n_clusters
+        extra = n_puntos % n_clusters
+
+        puntos = []
+        for i in range(n_clusters):
+            centro = np.random.uniform(rango_coords[0], rango_coords[1], size=(n_dim,))
+            cantidad = puntos_por_cluster + (1 if i < extra else 0)
+            dispersion = (rango_coords[1] - rango_coords[0]) * 0.05
+            cluster = np.random.normal(loc=centro, scale=dispersion, size=(cantidad, n_dim))
+            puntos.append(cluster)
+
+        puntos = np.vstack(puntos)
+        
+    else:
+        raise ValueError("Distribución no válida. Usar 'aleatorio', 'uniforme' o 'clusters'.")
     
-    pesos = pesos.reshape(-1, 1)
+    
+    pesos = np.random.uniform(rango_pesos[0], rango_pesos[1], size=n_puntos).reshape(-1, 1)
+    
     datos = np.hstack((puntos, pesos))
 
     with open(nombre_archivo, "w") as f:
@@ -136,9 +163,9 @@ def weiszfeld_modificado(puntos, pesos, tolerancia=1e-6, max_iter=1000):
     return x, max_iter  # retorno por máximo número de iteraciones
 
 
-# -----------------------------------------------
+# ----------------------------------------------------
 # Implementacion del Algoritmo de descenso coordenado
-# -----------------------------------------------
+# ----------------------------------------------------
 
 # -----------------------------------------------
 # Aproximación del gradiente parcial
@@ -190,3 +217,7 @@ def descenso_coordenado(puntos, pesos, tolerancia=1e-6, max_iter=1000):
         iteracion += 1
 
     return x, iteracion
+
+# ----------------------------------------------------
+# Implementacion del Método del Gradiente
+# ----------------------------------------------------

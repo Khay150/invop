@@ -3,7 +3,7 @@ import time
 
 # crear_instancia(nombre_archivo="instancia5D-500.txt", n_dim=5, n_puntos=500, seed=42)
 
-puntos, pesos = leer_instancia("instancia5D.txt")
+puntos, pesos = leer_instancia("instancia5D-500.txt")
 
 # -----------------------------------------------
 # Evaluar Algoritmo de Weiszfeld
