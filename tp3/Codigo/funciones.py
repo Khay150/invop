@@ -170,6 +170,7 @@ def weiszfeld_modificado(puntos, pesos, tolerancia=1e-6, max_iter=1000):
 # -----------------------------------------------
 # Aproximación del gradiente parcial
 # -----------------------------------------------
+
 def gradiente_parcial(x, puntos, pesos, h=1e-8):
     
     gradiente = np.zeros_like(x)
@@ -221,3 +222,49 @@ def descenso_coordenado(puntos, pesos, tolerancia=1e-6, max_iter=1000):
 # ----------------------------------------------------
 # Implementacion del Método del Gradiente
 # ----------------------------------------------------
+
+# -----------------------------------------------
+# Calcular el gradiente de la función objetivo
+# -----------------------------------------------
+
+def calcular_gradiente(x, puntos, pesos, epsilon=1e-8):
+    
+    diferencias = x - puntos
+    distancias = np.linalg.norm(diferencias, axis=1).reshape(-1, 1) + epsilon
+    
+    return np.sum(pesos.reshape(-1, 1) * diferencias / distancias, axis=0)
+
+# -------------------------------------------------
+# Método del gradiente usando el criterio de Armijo
+# -------------------------------------------------
+
+def metodo_gradiente_armijo(puntos, pesos, x_inicial=None, tolerancia=1e-6, c1=1e-4, max_iter=1000):
+    
+    n = puntos.shape[1]
+    
+    if x_inicial is None:
+        x = np.mean(puntos, axis=0)
+        
+    else:
+        x = np.array(x_inicial, dtype=float)
+
+    
+    for iteracion in range(1, max_iter+1):
+        gradiente = calcular_gradiente(x, puntos, pesos)
+        norma_grad = np.linalg.norm(gradiente)
+        
+        if norma_grad < tolerancia:
+            return x, iteracion
+        
+        direccion_descenso = -gradiente
+        alpha = 1.0  # paso inicial
+        valor_actual = funcion_objetivo(x, puntos, pesos)
+        
+        # Criterio de Armijo
+        while funcion_objetivo(x + alpha * direccion_descenso, puntos, pesos) > (valor_actual + c1 * alpha * (gradiente @ direccion_descenso)):
+            alpha *= 0.5
+
+        x = x + alpha * direccion_descenso
+       
+
+    return x, max_iter
