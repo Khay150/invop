@@ -5,8 +5,8 @@ from scipy.optimize import minimize_scalar
 # Funcion Para Crear Instancias
 # -------------------------------
 
-def crear_instancia(nombre_archivo="instancia.txt", n_dim=2, n_puntos=10,
-                    rango_coords=(-500, 500), rango_pesos=(1, 10), distribucion="aleatorio", seed=None):
+def crear_instancia(nombre_archivo="instancia.txt", n_dim=50, n_puntos=1000,
+                    rango_coords=(-500, 500), rango_pesos=(1, 1), distribucion="uniforme", seed=None):
 
     if seed is not None:
         np.random.seed(seed)
@@ -15,11 +15,9 @@ def crear_instancia(nombre_archivo="instancia.txt", n_dim=2, n_puntos=10,
         puntos = np.random.uniform(rango_coords[0], rango_coords[1], size=(n_puntos, n_dim))
         
     elif distribucion == "uniforme":
-        # Crear una grilla uniforme dentro del rango
-        lado = int(np.ceil(n_puntos ** (1/n_dim)))
-        grids = [np.linspace(rango_coords[0], rango_coords[1], lado) for _ in range(n_dim)]
-        malla = np.meshgrid(*grids) #Esto admite hasta dimensión 32 (por eso las pruebas no pasan de esa dimensión)
-        puntos = np.stack([m.flatten() for m in malla], axis=-1)[:n_puntos]
+        # Generar puntos uniformemente espaciados sin construir toda la grilla
+        puntos = np.linspace(rango_coords[0], rango_coords[1], n_puntos * n_dim)
+        puntos = puntos.reshape(n_puntos, n_dim)
         
     elif distribucion == "clusters":
         n_clusters = 4
