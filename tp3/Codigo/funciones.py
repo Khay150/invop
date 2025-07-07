@@ -6,7 +6,7 @@ from scipy.optimize import minimize_scalar
 # -------------------------------
 
 def crear_instancia(nombre_archivo="instancia.txt", n_dim=2, n_puntos=10,
-                    rango_coords=(-100, 100), rango_pesos=(1, 10), distribucion="aleatorio", seed=None):
+                    rango_coords=(-500, 500), rango_pesos=(1, 10), distribucion="aleatorio", seed=None):
 
     if seed is not None:
         np.random.seed(seed)
@@ -238,7 +238,7 @@ def calcular_gradiente(x, puntos, pesos, epsilon=1e-8):
 # Método del gradiente usando el criterio de Armijo
 # -------------------------------------------------
 
-def metodo_gradiente_armijo(puntos, pesos, x_inicial=None, tolerancia=1e-6, c1=1e-4, max_iter=1000):
+def metodo_gradiente(puntos, pesos, x_inicial=None, tolerancia=1e-6, c1=1e-4, max_iter=1000):
     
     n = puntos.shape[1]
     
