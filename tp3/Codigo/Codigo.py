@@ -1,10 +1,10 @@
 from funciones import crear_instancia, leer_instancia, funcion_objetivo, weiszfeld_modificado, descenso_coordenado, metodo_gradiente
 import time
 
-crear_instancia(nombre_archivo="instancia_18.txt", n_dim=50, n_puntos=8000,
-                    rango_coords=(-50000, 50000), rango_pesos=(100, 1000), distribucion="aleatorio", seed=None)
+crear_instancia(nombre_archivo="instancia_16.txt", n_dim=50, n_puntos = 10000,
+                    rango_coords=(-50000, 50000), rango_pesos=(1, 100), distribucion="clusters", seed=None)
 
-puntos, pesos = leer_instancia("instancia_18.txt")
+puntos, pesos = leer_instancia("instancia_16.txt")
 
 # -----------------------------------------------
 # Evaluar Algoritmo de Weiszfeld
@@ -63,6 +63,6 @@ print("\n")
 print("Valores Obtenidos Por el Método del Gradiente: \n")
 
 print("Centro óptimo Gradiente:", solucion_gradiente)
-print(f"IteracionesGradiente (Tiempo de Convergencia): {iteraciones_gradiente}")
+print(f"Iteraciones Gradiente (Tiempo de Convergencia): {iteraciones_gradiente}")
 print("Valor función objetivo Gradiente:", valor_en_funcion_objetivo_gradiente)
 print(f"Tiempo de Ejecucion Gradiente: {tiempo_total_gradiente}")

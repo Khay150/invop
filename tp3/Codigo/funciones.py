@@ -15,7 +15,7 @@ def crear_instancia(nombre_archivo="instancia.txt", n_dim=50, n_puntos=1000,
         puntos = np.random.uniform(rango_coords[0], rango_coords[1], size=(n_puntos, n_dim))
         
     elif distribucion == "uniforme":
-        # Generar puntos uniformemente espaciados sin construir toda la grilla
+        
         puntos = np.linspace(rango_coords[0], rango_coords[1], n_puntos * n_dim)
         puntos = puntos.reshape(n_puntos, n_dim)
         
