@@ -1,10 +1,10 @@
 from funciones import crear_instancia, leer_instancia, funcion_objetivo, weiszfeld_modificado, descenso_coordenado, metodo_gradiente
 import time
 
-# crear_instancia(nombre_archivo="instancia_17.txt", n_dim=50, n_puntos=800,
-#                     rango_coords=(-500, 500), rango_pesos=(1, 10), distribucion="aleatorio", seed=None)
+crear_instancia(nombre_archivo="instancia_18.txt", n_dim=50, n_puntos=8000,
+                    rango_coords=(-50000, 50000), rango_pesos=(100, 1000), distribucion="aleatorio", seed=None)
 
-puntos, pesos = leer_instancia("instancia_17.txt")
+puntos, pesos = leer_instancia("instancia_18.txt")
 
 # -----------------------------------------------
 # Evaluar Algoritmo de Weiszfeld
