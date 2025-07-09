@@ -130,35 +130,34 @@ def operador_S(punto_j, pesos, puntos, indice_j):
 
 def punto_inicial(puntos, pesos):
 
-    costos = [sum(pesos[i] * np.linalg.norm(puntos[s] - puntos[i]) for i in range(len(puntos))) 
-              for s in range(len(puntos))]
+    costos = [np.sum(pesos * np.linalg.norm(puntos[s] - puntos, axis=1)) for s in range(len(puntos))]
     j = np.argmin(costos)
     Rj = calcular_R(puntos[j], puntos, pesos, j)
     if np.linalg.norm(Rj) <= pesos[j]:
         return puntos[j]
     return operador_S(puntos[j], pesos, puntos, j)
 
-# ----------------------------------------------------------------
-# Algoritmo completo de Weiszfeld con ambas modificaciones
-# ----------------------------------------------------------------
 
-def weiszfeld_modificado(puntos, pesos, tolerancia=1e-6, max_iter=1000):
+
+# ------------------------------------------------------------------
+# Algoritmo completo de Weiszfeld con criterio de parada modificado
+# ------------------------------------------------------------------
+
+def weiszfeld(puntos, pesos, tolerancia=1e-6, max_iter=1000):
     
     x = punto_inicial(puntos, pesos)  # Modificación 2
+
     for iteracion in range(1, max_iter + 1):
-        # Modificación 1: si x coincide con algún punto de demanda
-        if any(np.allclose(x, p) for p in puntos):
-            j = np.argwhere([np.allclose(x, p) for p in puntos]).flatten()[0]
-            Rj = calcular_R(x, puntos, pesos, j)
-            if np.linalg.norm(Rj) <= pesos[j]:
-                return x, iteracion  # x es óptimo
-            x = operador_S(x, pesos, puntos, j)  # aplicar S(p_j)
-        else:
-            x_nuevo = operador_weiszfeld(x, puntos, pesos)
-            if np.linalg.norm(x_nuevo - x) < tolerancia:
-                return x_nuevo, iteracion  # convergencia
-            x = x_nuevo
-    return x, max_iter  # retorno por máximo número de iteraciones
+        x_nuevo = operador_weiszfeld(x, puntos, pesos)
+
+        # Criterio de parada basado en el gradiente (como en los otros métodos)
+        grad = calcular_gradiente(x_nuevo, puntos, pesos)
+        if np.linalg.norm(grad) < tolerancia:
+            return x_nuevo, iteracion
+
+        x = x_nuevo
+
+    return x, max_iter
 
 
 # ----------------------------------------------------
