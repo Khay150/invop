@@ -1,4 +1,4 @@
-from funciones import crear_instancia, leer_instancia, funcion_objetivo, weiszfeld, descenso_coordenado, metodo_gradiente
+from Implementaciones import crear_instancia, leer_instancia, funcion_objetivo, weiszfeld, descenso_coordenado, metodo_gradiente
 import time
 
 crear_instancia(nombre_archivo="instancia_18.txt", n_dim=50, n_puntos = 10000,
